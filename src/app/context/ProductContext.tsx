@@ -2,10 +2,17 @@
 
 "use client";
 
-import React, { createContext, useContext, useState, ReactNode, Dispatch, SetStateAction, } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  ReactNode,
+  Dispatch,
+  SetStateAction,
+} from "react";
 
 import { Product } from "../types/product";
-import { getProducts } from "../lib/api/products";
+import { products as localProducts } from "../lib/api/products"; // Importa diretamente os dados
 
 type ProductContextType = {
   products: Product[];
@@ -25,15 +32,15 @@ export const ProductProvider = ({ children }: ProductProviderProps) => {
   const [products, setProducts] = useState<Product[]>([]);
 
   const fetchProducts = () => {
-    getProducts()
-      .then(setProducts)
-      .catch((err) => console.error("Erro ao buscar produtos:", err));
+    try {
+      setProducts(localProducts); // Usando os dados estáticos diretamente
+    } catch (err: unknown) {
+      console.error("Erro ao buscar produtos:", err);
+    }
   };
 
   return (
-    <ProductContext.Provider
-      value={{ products, setProducts, fetchProducts }}
-    >
+    <ProductContext.Provider value={{ products, setProducts, fetchProducts }}>
       {children}
     </ProductContext.Provider>
   );

@@ -6,6 +6,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import ProductList from "./components/ProductList";
 import { Product } from "./types/product";
+import { getProducts } from "./lib/api/products";
 import styles from "./HomePage.module.css";
 
 const HomePage = () => {
@@ -15,12 +16,10 @@ const HomePage = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch("/api/product");
-        if (!response.ok) throw new Error("Erro ao buscar produtos");
-        const data = await response.json();
+        const data = await getProducts();
         setProducts(data);
       } catch (error) {
-        console.error(error);
+        console.error("Erro ao carregar produtos:", error);
       }
     };
 

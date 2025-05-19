@@ -3,37 +3,18 @@
 import React, { useEffect, useState } from "react";
 import { Product } from "../types/product";
 import ProductCard from "./ProductCard";
-import { useProduct } from "../context/ProductContext";
 import Pagination from "./Pagination";
 import styles from "./ProductList.module.css";
 
+type ProductListProps = {
+  products: Product[];
+};
+
 const ITEMS_PER_PAGE = 20;
 
-const ProductList: React.FC = () => {
-  const { products, setProducts } = useProduct();
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+const ProductList = ({ products }: ProductListProps) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [paginatedProducts, setPaginatedProducts] = useState<Product[]>([]);
-
-  const fetchProducts = async (): Promise<void> => {
-    try {
-      const res = await fetch("/api/products", { cache: "no-store" });
-      if (!res.ok) throw new Error("Erro ao buscar produtos");
-
-      const data: Product[] = await res.json();
-      setProducts(data);
-    } catch (err) {
-      console.error(err);
-      setError("Erro ao carregar produtos");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchProducts();
-  }, []);
 
   useEffect(() => {
     const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
@@ -45,9 +26,9 @@ const ProductList: React.FC = () => {
     setCurrentPage(page);
   };
 
-  if (loading) return <div className={styles.loading}>Carregando produtos...</div>;
-  if (error) return <div className={styles.error}>{error}</div>;
-  if (!products.length) return <p className={styles.noProductsMessage}>Nenhum produto encontrado.</p>;
+  if (!products.length) {
+    return <p className={styles.noProductsMessage}>Nenhum produto encontrado.</p>;
+  }
 
   return (
     <div>

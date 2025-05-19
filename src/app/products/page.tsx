@@ -3,7 +3,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Product } from '@/app/types/product';
+import { Product } from '../types/product';
 import { getProducts } from '../lib/api/products';
 import { useProduct } from '../context/ProductContext';
 import ProductList from '../components/ProductList';
@@ -30,7 +30,7 @@ const ProductsPage = () => {
     };
 
     load();
-  }, []);
+  }, [setContextProducts]);
 
   return (
     <div className={styles.container}>
