@@ -12,7 +12,6 @@ const HomePage = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const router = useRouter();
 
-  // 06-Hooks + 08-Api - Busca produtos ao montar componente
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -28,7 +27,6 @@ const HomePage = () => {
     fetchProducts();
   }, []);
 
-  // 05-Formulários e Eventos - Handler de navegação
   const handleNavigate = () => {
     router.push("/products");
   };
@@ -42,8 +40,6 @@ const HomePage = () => {
           Ver Produtos
         </button>
       </section>
-
-      {/* 03-Arrays - Produtos em Destaque */}
       <section className={styles.featuredSection}>
         <h2 className={styles.sectionTitle}>Produtos em Destaque</h2>
         <ProductList products={products.slice(0, 6)} />
@@ -53,10 +49,3 @@ const HomePage = () => {
 };
 
 export default HomePage;
-
-// 01-Estruturas e Tratamento -
-// 03-Arrays -
-// 05-Formulários e Eventos -
-// 06-Hooks -
-// 08-Api -
-// 09-Renderização Condicional -

@@ -4,7 +4,7 @@
 
 import { useEffect, useState } from 'react';
 import { Product } from '@/app/types/product';
-import { getProducts } from '../lib/api/products'; // ✅ Corrigido aqui
+import { getProducts } from '../lib/api/products';
 import { useProduct } from '../context/ProductContext';
 import ProductList from '../components/ProductList';
 import styles from './ProductsPage.module.css';
